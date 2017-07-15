@@ -3,6 +3,9 @@ defmodule TwoMinutes.Web.UserController do
 
   alias TwoMinutes.Account
 
+ plug TwoMinutes.Web.Plugs.AuthenticateUser when action in [:index, :edit, :update, :delete]
+ plug TwoMinutes.Web.Plugs.AuthenticateAdmin when action in [:delete]
+
   def index(conn, _params) do
     users = Account.list_users()
     render(conn, "index.html", users: users)
@@ -17,8 +20,10 @@ defmodule TwoMinutes.Web.UserController do
     case Account.create_user(user_params) do
       {:ok, user} ->
         conn
+        |> Guardian.Plug.sign_in(user)
         |> put_flash(:info, "User created successfully.")
         |> redirect(to: user_path(conn, :show, user))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

@@ -1,1 +1,11 @@
 /* This file is for your main application css. */
+.login-form {
+  margin-top: 20px;
+  background: #eee;
+  padding: 50px;
+}
+
+.container .row {
+  margin-left: 0px;
+  margin-right: 0px;
+}

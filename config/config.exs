@@ -28,6 +28,14 @@ config :cloudex,
     secret: System.get_env("CLOUDEX_API_SECRET"),
     cloud_name: System.get_env("CLOUD_NAME")
 
+# Config Guardian
+config :guardian, Guardian,
+ issuer: "TwoMinutes.#{Mix.env}",
+ ttl: {30, :days},
+ verify_issuer: true,
+ serializer: TwoMinutes.GuardianSerializer,
+ secret_key: "+3igxGAiyvhKLNV18jate2Bg1LAsPUrsDFtLffcMmz9Hl/8dcCGzQEHXfCahdHVK"
+
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

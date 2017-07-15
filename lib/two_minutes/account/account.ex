@@ -37,6 +37,10 @@ defmodule TwoMinutes.Account do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_by_email(email) do
+    Repo.get_by(User, email: email)
+  end
+
   @doc """
   Creates a user.
 
@@ -50,10 +54,13 @@ defmodule TwoMinutes.Account do
 
   """
   def create_user(attrs \\ %{}) do
-    IO.inspect(attrs)
+    if attrs["avatar"] do
+      uploaded = upload_image(attrs)
+    end
+    new_attrs = Map.put(attrs, "avatar", uploaded)
 
     %User{}
-    |> User.changeset(attrs)
+    |> User.changeset(new_attrs)
     |> Repo.insert()
   end
 
@@ -70,7 +77,6 @@ defmodule TwoMinutes.Account do
 
   """
   def update_user(%User{} = user, attrs) do
-    
     if attrs["avatar"] do
       uploaded = upload_image(attrs)
     end

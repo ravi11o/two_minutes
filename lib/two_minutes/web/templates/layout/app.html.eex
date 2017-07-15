@@ -21,15 +21,20 @@
       <div class="nav-wrapper">
         <%= link "2Minutes", to: page_path(@conn, :index), class: "brand-logo" %>
         <ul class="right hide-on-med-and-down">
-          <li><a href="sass.html">Sass</a></li>
-          <li>
-            <div class="chip">
-              <img src="images/yuna.jpg" alt="Contact Person">
-              Jane Doe
-            </div>
-          </li>
-          <li><%= link "Logout", to: page_path(@conn, :index) %></li>
-
+          <%= if @current_user do %>
+            <li>
+              <div class="chip">
+                <img src="<%= @current_user.avatar%>">
+                <%= @current_user.name %>
+              </div>
+            </li>
+            <li><%= link "Logout", to: session_path(@conn, :delete), method: "delete" %>
+              
+            </li>
+          <% else %>
+            <li><%= link "Login", to: session_path(@conn, :new) %></li>
+            <li><%= link "Register", to: user_path(@conn, :new) %></li>
+          <% end %>
         </ul>
       </div>
     </nav>
@@ -44,6 +49,5 @@
 
     </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
   </body>
 </html>
