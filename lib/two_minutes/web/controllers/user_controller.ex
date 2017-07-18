@@ -22,7 +22,7 @@ defmodule TwoMinutes.Web.UserController do
         conn
         |> Guardian.Plug.sign_in(user)
         |> put_flash(:info, "User created successfully.")
-        |> redirect(to: user_path(conn, :show, user))
+        |> redirect(to: page_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)

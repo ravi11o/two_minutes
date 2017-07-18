@@ -34,6 +34,13 @@ defmodule TwoMinutes.Web.Router do
     delete "/logout", SessionController, :delete
   end
 
+  scope "/auth", TwoMinutes.Web do
+    pipe_through [:browser]
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", TwoMinutes.Web do
   #   pipe_through :api

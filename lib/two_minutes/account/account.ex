@@ -7,52 +7,22 @@ defmodule TwoMinutes.Account do
   alias TwoMinutes.Repo
 
   alias TwoMinutes.Account.User
+  alias TwoMinutes.Account.GoogleUser
+  alias TwoMinutes.Account.FacebookUser
 
-  @doc """
-  Returns the list of users.
+  ############################ User Queries ###############################
 
-  ## Examples
-
-      iex> list_users()
-      [%User{}, ...]
-
-  """
   def list_users do
     Repo.all(User)
   end
 
-  @doc """
-  Gets a single user.
-
-  Raises `Ecto.NoResultsError` if the User does not exist.
-
-  ## Examples
-
-      iex> get_user!(123)
-      %User{}
-
-      iex> get_user!(456)
-      ** (Ecto.NoResultsError)
-
-  """
+  
   def get_user!(id), do: Repo.get!(User, id)
 
   def get_by_email(email) do
     Repo.get_by(User, email: email)
   end
 
-  @doc """
-  Creates a user.
-
-  ## Examples
-
-      iex> create_user(%{field: value})
-      {:ok, %User{}}
-
-      iex> create_user(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_user(attrs \\ %{}) do
     if attrs["avatar"] do
       uploaded = upload_image(attrs)
@@ -64,18 +34,6 @@ defmodule TwoMinutes.Account do
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a user.
-
-  ## Examples
-
-      iex> update_user(user, %{field: new_value})
-      {:ok, %User{}}
-
-      iex> update_user(user, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def update_user(%User{} = user, attrs) do
     if attrs["avatar"] do
       uploaded = upload_image(attrs)
@@ -87,31 +45,10 @@ defmodule TwoMinutes.Account do
     |> Repo.update()
   end
 
-  @doc """
-  Deletes a User.
-
-  ## Examples
-
-      iex> delete_user(user)
-      {:ok, %User{}}
-
-      iex> delete_user(user)
-      {:error, %Ecto.Changeset{}}
-
-  """
   def delete_user(%User{} = user) do
     Repo.delete(user)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking user changes.
-
-  ## Examples
-
-      iex> change_user(user)
-      %Ecto.Changeset{source: %User{}}
-
-  """
   def change_user(%User{} = user) do
     User.changeset(user, %{})
   end
@@ -121,5 +58,29 @@ defmodule TwoMinutes.Account do
       [ok: image] -> image.url
       true -> nil
     end 
+  end
+
+  ########## Google User Queries ###################
+  def get_user_from_google(email) do
+    Repo.get_by(GoogleUser, email: email)
+  end
+
+  def create_google_user(user_params) do
+    %GoogleUser{}
+    |> GoogleUser.changeset(user_params)
+    |> Repo.insert()
+  end
+
+
+  ########### Facebook User Queries ###############
+
+  def get_user_from_facebook(uid) do
+    Repo.get_by(FacebookUser, uid: uid)
+  end
+
+  def create_facebook_user(user_params) do
+    %FacebookUser{}
+    |> FacebookUser.changeset(user_params)
+    |> Repo.insert()
   end
 end

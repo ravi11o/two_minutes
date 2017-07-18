@@ -24,7 +24,7 @@
           <%= if @current_user do %>
             <li>
               <div class="chip">
-                <img src="<%= @current_user.avatar%>">
+                <img src="<%= @current_user.avatar %>">
                 <%= @current_user.name %>
               </div>
             </li>

@@ -1,24 +1,25 @@
 <div class="row">
   <div class="col s6 offset-s3 login-form">
-    <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
+    <div class="row inner-form">
+      <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
+        <div class="row">
+          <%= email_input f, :email, placeholder: "Email", class: "form-control" %>
+        </div>
+        <div class="row">
+          <%= password_input f, :password, placeholder: "Password",class: "form-control" %>
+        </div>
+        <div class="center">
+            <%= submit "Submit", class: "btn btn-primary" %>
+        </div>
+      <% end %>
       <div class="row">
-        <%= label f, :email, class: "control-label" %>
-        <%= email_input f, :email, class: "form-control" %>
+        <div class="col s12 center">OR Login With</div>
       </div>
       <div class="row">
-        <%= label f, :password, class: "control-label" %>
-        <%= password_input f, :password, class: "form-control" %>
+        <div class="col s4 offset-s1"><%= link "Google", to: auth_path(@conn, :request, "google"), class: "btn btn-primary" %></div>
+        <div class="col s4 offset-s1"><%= link "Facebook", to: auth_path(@conn, :request, "facebook"), class: "btn btn-primary" %></div>
       </div>
-      <div class="center">
-          <%= submit "Submit", class: "btn btn-primary" %>
-      </div>
-    <% end %>
-    <div class="row">
-      <div class="col s12 center">OR</div>
     </div>
-    <div class="row">
-      <div class="col s4"><%= link "Login with Google", to: page_path(@conn, :index), class: "btn btn-primary" %></div>
-      <div class="col s4 offset-s1"><%= link "Login with Facebook", to: page_path(@conn, :index), class: "btn btn-primary" %></div>
-    </div>
+    
   </div>
 </div>

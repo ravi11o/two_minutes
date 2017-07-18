@@ -4,8 +4,14 @@
   background: #eee;
   padding: 50px;
 }
+.inner-form {
+  padding: 20px;
+  margin-top: -20px;
+}
 
-.container .row {
-  margin-left: 0px;
-  margin-right: 0px;
+.registration-form {
+  background: #eee;
+  margin-right: 100px;
+  margin-left: 100px;
+  margin-top: 20px;
 }

@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col s6 offset-s3">
+<div class="row registration-form">
+  <div class="col s8 offset-s2">
     <h5>New User Register Here..</h5>
     <%= form_for @changeset, @action, [multipart: true], fn f -> %>
       <%= if @changeset.action do %>
@@ -9,20 +9,17 @@
       <% end %>
 
       <div class="form-group">
-        <%= label f, :name, class: "control-label" %>
-        <%= text_input f, :name, class: "form-control" %>
+        <%= text_input f, :name, placeholder: "Name", class: "form-control" %>
         <%= error_tag f, :name %>
       </div>
 
       <div class="form-group">
-        <%= label f, :email, class: "control-label" %>
-        <%= email_input f, :email, class: "form-control" %>
+        <%= email_input f, :email, placeholder: "Email", class: "form-control" %>
         <%= error_tag f, :email %>
       </div>
 
       <div class="form-group">
-        <%= label f, :password, class: "control-label" %>
-        <%= password_input f, :password, class: "form-control" %>
+        <%= password_input f, :password, placeholder: "Password", class: "form-control" %>
         <%= error_tag f, :password %>
       </div>
 
@@ -36,5 +33,10 @@
         <%= submit "Submit", class: "btn btn-primary" %>
       </div>
     <% end %>
+    <h5 class="center">OR Login With</h5>
+    <div class="row">
+      <div class="col s5 offset-s1"><a href="/auth/google" class="btn btn-primary">Google</a></div>
+      <div class="col s5 offset-s1"><a href="/auth/facebook" class="btn btn-primary">Facebook</a></div>
+    </div>
   </div> 
 </div> 
